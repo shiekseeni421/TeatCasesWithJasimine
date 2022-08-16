@@ -4,7 +4,12 @@ import { useTranslation } from "react-i18next";
 import i18next from "i18next";
 
 function App() {
-  let [ToggleEle, setToggleEle] = useState();
+  let [ToggleEle, setToggleEle] = useState({
+    0: "",
+    1: "",
+    2: "",
+    3: "",
+  });
 
   const { t } = useTranslation();
 
@@ -44,6 +49,16 @@ function App() {
       ProductPrize: 699,
     },
   ];
+
+  let handelToCahnge = (e) => {
+    for (let i in ToggleEle) {
+      if (i === e.target.id) {
+        ToggleEle[i] = "ON";
+        setToggleEle(ToggleEle);
+      }
+    }
+    console.log(ToggleEle);
+  };
   return (
     <>
       <div className="top_bar d-flex justify-content-end">
@@ -84,9 +99,9 @@ function App() {
                   className="addButton"
                   id={item.id}
                   key={key}
-                  onClick={(e) => setToggleEle(e.target.id)}
+                  onClick={(e) => handelToCahnge(e)}
                 >
-                  {t("add_button")}
+                  {ToggleEle[key] === "ON" ? "+ add -" : t("add_button")}
                 </button>
               </div>
             </div>
