@@ -50,7 +50,7 @@ function App() {
     },
   ];
 
-  let handelToCahnge = (e) => {
+  let handelToChange = (e) => {
     for (let i in ToggleEle) {
       if (i === e.target.id) {
         ToggleEle[i] = "ON";
@@ -99,7 +99,7 @@ function App() {
                   className="addButton"
                   id={item.id}
                   key={key}
-                  onClick={(e) => handelToCahnge(e)}
+                  onClick={(e) => handelToChange(e)}
                 >
                   {ToggleEle[key] === "ON" ? "+ add -" : t("add_button")}
                 </button>
