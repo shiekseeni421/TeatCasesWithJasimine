@@ -73,3 +73,22 @@
 .top_bar{
   margin: 10px;
 }
+
+.button_container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.remove_button{
+  background-color: red;
+  border: none;
+  color: aliceblue;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+
+}
+

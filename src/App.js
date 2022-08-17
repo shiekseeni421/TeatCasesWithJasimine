@@ -1,17 +1,19 @@
 import "./App.css";
-import { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import i18next from "i18next";
+import StoreItems from "./StoreItems";
+import { ShopingProvider } from "./context/ShopingContext";
 
 function App() {
-  let [ToggleEle, setToggleEle] = useState({
-    0: "",
-    1: "",
-    2: "",
-    3: "",
-  });
+  // let [ToggleEle, setToggleEle] = useState({
+  //   0: "ON",
+  //   1: "",
+  //   2: "",
+  //   3: "",
+  // });
 
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const language = [
     { code: "fr", name: "Français", country_code: "fr" },
@@ -22,45 +24,35 @@ function App() {
   let DataArray = [
     {
       id: 0,
-      imgUrl:
-        "https://static.wixstatic.com/media/ea71bb_f9b13334143b4102bc6e743068a83dd0~mv2_d_3444_4568_s_4_2.jpg/v1/fill/w_319,h_425,al_c,q_80,usm_0.66_1.00_0.01/ea71bb_f9b13334143b4102bc6e743068a83dd0~mv2_d_3444_4568_s_4_2.webp",
       ItemName: "Item 1",
       ProductPrize: 400,
+      imgUrl:
+        "https://static.wixstatic.com/media/ea71bb_f9b13334143b4102bc6e743068a83dd0~mv2_d_3444_4568_s_4_2.jpg/v1/fill/w_319,h_425,al_c,q_80,usm_0.66_1.00_0.01/ea71bb_f9b13334143b4102bc6e743068a83dd0~mv2_d_3444_4568_s_4_2.webp",
     },
     {
       id: 1,
-      imgUrl:
-        "https://static.wixstatic.com/media/ea71bb_c9e22cba4e534026a1a7be3b15a8a648~mv2_d_2629_3487_s_4_2.jpg/v1/fill/w_319,h_425,al_c,q_80,usm_0.66_1.00_0.01/ea71bb_c9e22cba4e534026a1a7be3b15a8a648~mv2_d_2629_3487_s_4_2.webp",
       ItemName: "Item 2",
       ProductPrize: 600,
+      imgUrl:
+        "https://static.wixstatic.com/media/ea71bb_c9e22cba4e534026a1a7be3b15a8a648~mv2_d_2629_3487_s_4_2.jpg/v1/fill/w_319,h_425,al_c,q_80,usm_0.66_1.00_0.01/ea71bb_c9e22cba4e534026a1a7be3b15a8a648~mv2_d_2629_3487_s_4_2.webp",
     },
     {
       id: 2,
-      imgUrl:
-        "https://static.wixstatic.com/media/ea71bb_fe4605fcf8b74a439ad933c7253d7779~mv2_d_2629_3487_s_4_2.jpg/v1/fill/w_281,h_375,al_c,q_80,usm_0.66_1.00_0.01/ea71bb_fe4605fcf8b74a439ad933c7253d7779~mv2_d_2629_3487_s_4_2.webp",
       ItemName: "Item 3",
       ProductPrize: 550,
+      imgUrl:
+        "https://static.wixstatic.com/media/ea71bb_fe4605fcf8b74a439ad933c7253d7779~mv2_d_2629_3487_s_4_2.jpg/v1/fill/w_281,h_375,al_c,q_80,usm_0.66_1.00_0.01/ea71bb_fe4605fcf8b74a439ad933c7253d7779~mv2_d_2629_3487_s_4_2.webp",
     },
     {
       id: 3,
-      imgUrl:
-        "https://static.wixstatic.com/media/ea71bb_4f91ddb36f2346c9870d41f83ee4c93e~mv2_d_2487_3298_s_4_2.jpg/v1/fill/w_319,h_425,al_c,q_80,usm_0.66_1.00_0.01/ea71bb_4f91ddb36f2346c9870d41f83ee4c93e~mv2_d_2487_3298_s_4_2.webp",
       ItemName: "Item 4",
       ProductPrize: 699,
+      imgUrl:
+        "https://static.wixstatic.com/media/ea71bb_4f91ddb36f2346c9870d41f83ee4c93e~mv2_d_2487_3298_s_4_2.jpg/v1/fill/w_319,h_425,al_c,q_80,usm_0.66_1.00_0.01/ea71bb_4f91ddb36f2346c9870d41f83ee4c93e~mv2_d_2487_3298_s_4_2.webp",
     },
   ];
-
-  let handelToChange = (e) => {
-    for (let i in ToggleEle) {
-      if (i === e.target.id) {
-        ToggleEle[i] = "ON";
-        setToggleEle(ToggleEle);
-      }
-    }
-    console.log(ToggleEle);
-  };
   return (
-    <>
+    <ShopingProvider>
       <div className="top_bar d-flex justify-content-end">
         <div class="dropdown">
           <button
@@ -90,25 +82,16 @@ function App() {
       <div className="cardContainer">
         {DataArray.map((item, key) => {
           return (
-            <div className="card">
-              <img src={item.imgUrl} className="imgStyle" alt="shopingImg" />
-              <div className="prizeContainer">
-                <h1>{t("welcome_message")}</h1>
-                <p className="prize">Prize: {item.ProductPrize} Rs</p>
-                <button
-                  className="addButton"
-                  id={item.id}
-                  key={key}
-                  onClick={(e) => handelToChange(e)}
-                >
-                  {ToggleEle[key] === "ON" ? "+ add -" : t("add_button")}
-                </button>
-              </div>
-            </div>
+            <StoreItems
+              id={item.id}
+              Name={item.ItemName}
+              Prize={item.ProductPrize}
+              ImgUrl={item.imgUrl}
+            />
           );
         })}
       </div>
-    </>
+    </ShopingProvider>
   );
 }
 
