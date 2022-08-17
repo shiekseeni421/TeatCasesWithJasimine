@@ -22,44 +22,51 @@ export function ShopingProvider({ children }) {
     }
   }
 
-  function incrementCart(id) {
-    setCartItem((cartItem) => {
-      if (cartItem.find((item) => item.id === id) == null) {
-        return [...cartItem, { id, quantity: 1 }];
-      } else {
-        cartItem.map((item) => {
-          if (item.id === id) {
-            return { ...item, quantity: item.quantity + 1 };
-          } else {
-            return item;
-          }
-        });
-      }
-    });
-    console.log(cartItem);
-  }
-
   function decrementCart(id) {
-    setCartItem((cartItem) => {
-      let exits = cartItem.find((item) => item.id === id);
-      if (exits && exits.quantity === 1) {
-        return cartItem.filter((item) => item.id !== id);
-      } else {
-        cartItem.map((item) => {
-          if (item.id === id) {
-            return { ...item, quantity: item.quantity - 1 };
-          } else {
-            return item;
-          }
-        });
-      }
-    });
+    // setCartItem((cartItem) => {
+    //   let exits = cartItem.find((item) => item.id === id);
+    //   if (exits && exits.quantity === 1) {
+    //     return cartItem.filter((item) => item.id !== id);
+    //   } else {
+    //     cartItem.map((item) => {
+    //       if (item.id === id) {
+    //         return { ...item, quantity: item.quantity - 1 };
+    //       } else {
+    //         return item;
+    //       }
+    //     });
+    //   }
+    // });
+
+    let exist = cartItem.find((item) => item.id === id);
+    if (exist.quantity === 1) {
+      setCartItem(cartItem.filter((item) => item.id !== id));
+    } else {
+      setCartItem(
+        cartItem.map((item) =>
+          item.id === id ? { ...exist, quantity: exist.quantity - 1 } : item
+        )
+      );
+    }
   }
 
   function removeCart(id) {
     setCartItem((cartItem) => {
       return cartItem.filter((item) => item.id !== id);
     });
+  }
+
+  function onAdd(id) {
+    const exist = cartItem.find((item) => item.id === id);
+    if (exist) {
+      setCartItem(
+        cartItem.map((item) =>
+          item.id === id ? { ...exist, quantity: exist.quantity + 1 } : item
+        )
+      );
+    } else {
+      setCartItem([...cartItem, { id, quantity: 1 }]);
+    }
   }
   return (
     <ShopingCartContext.Provider
@@ -68,7 +75,7 @@ export function ShopingProvider({ children }) {
       }}
     >
       <UpdateCartContext.Provider
-        value={{ getItemQnty, incrementCart, decrementCart, removeCart }}
+        value={{ getItemQnty, decrementCart, removeCart, onAdd }}
       >
         {children}
       </UpdateCartContext.Provider>

@@ -4,7 +4,7 @@ import { UseCartUpdate } from "./context/ShopingContext";
 function StoreItems(props) {
   let { id, Name, Prize, ImgUrl } = props;
 
-  const { getItemQnty, incrementCart, decrementCart, removeCart } =
+  const { getItemQnty, incrementCart, decrementCart, removeCart, onAdd } =
     UseCartUpdate();
   let stockItem = getItemQnty(id);
   return (
@@ -17,13 +17,13 @@ function StoreItems(props) {
         </div>
         <div className="button_container">
           {stockItem === 0 ? (
-            <button className="addButton" onClick={() => incrementCart(id)}>
+            <button className="addButton" onClick={() => onAdd(id)}>
               + Add Cart
             </button>
           ) : (
             <div className="d-flex align-items-center flex-column">
               <div className="button_container" style={{ gap: "0.5rem" }}>
-                <button className="addButton" onClick={() => incrementCart(id)}>
+                <button className="addButton" onClick={() => onAdd(id)}>
                   +
                 </button>
                 <span>{stockItem} Item to add</span>
